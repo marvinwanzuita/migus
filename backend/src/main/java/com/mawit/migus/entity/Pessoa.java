@@ -3,10 +3,11 @@ package com.mawit.migus.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "pessoa")
+@Table(name = "tb_pessoas")
 @Data
 public class Pessoa {
 
@@ -15,17 +16,13 @@ public class Pessoa {
     private Long id;
 
     private String nome;
-    private String email;
-    private String senha;
 
-    public Pessoa(){}
+    @ManyToMany
+    @JoinTable(name = "tb_pessoa_gosto",
+        joinColumns = @JoinColumn(name = "pessoa_id"),
+        inverseJoinColumns = @JoinColumn(name = "gosto_id"))
+    Set<Gosto> gostos = new HashSet<>();
 
-    public Pessoa(Long id, String nome, String email, String senha, Date dataNascimento) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-    }
 
 
 }
